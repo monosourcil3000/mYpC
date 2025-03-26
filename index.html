@@ -3,77 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prank Site</title>
+    <title>Google</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
     <style>
         body {
-            background-color: #008080;
-            font-family: Arial, sans-serif;
+            font-family: 'Roboto', sans-serif;
             text-align: center;
-            padding-top: 100px;
+            margin-top: 15%;
         }
-        .fake-error {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 400px;
-            background: #c0c0c0;
-            border: 3px solid black;
-            padding: 15px;
-            box-shadow: 5px 5px 10px rgba(0,0,0,0.5);
-        }
-        .fake-title {
-            background: navy;
-            color: white;
-            padding: 5px;
+        .logo {
+            font-size: 60px;
             font-weight: bold;
-            text-align: left;
+            color: #4285F4;
         }
-        .fake-content {
+        .search-box {
+            margin-top: 20px;
+        }
+        input {
+            width: 400px;
             padding: 10px;
+            font-size: 16px;
+            border: 1px solid #dfe1e5;
+            border-radius: 24px;
+            outline: none;
         }
-        .fake-button {
-            background: lightgray;
-            border: 1px solid black;
-            padding: 5px 10px;
+        .search-btn {
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            background-color: #4285F4;
+            color: white;
+            border-radius: 5px;
             cursor: pointer;
         }
     </style>
-    <script>
-        function startPrank() {
-            // Create a loop for popups
-            let count = 0;
-            let maxPopups = 5; // Browsers block excessive popups, so we limit them
-            let interval = setInterval(() => {
-                if (count < maxPopups) {
-                    window.open('https://example.com', '_blank', 'width=400,height=300');
-                    count++;
-                } else {
-                    clearInterval(interval);
-                }
-            }, 500);
-            
-            // Display fake XP error
-            let errorBox = document.createElement("div");
-            errorBox.className = "fake-error";
-            errorBox.innerHTML = `
-                <div class='fake-title'>
-                    <span>Windows XP Error</span>
-                </div>
-                <div class='fake-content'>
-                    <p>A fatal error has occurred.</p>
-                    <button class='fake-button' onclick='startPrank()'>OK</button>
-                </div>
-            `;
-            document.body.appendChild(errorBox);
-        }
-
-        window.onload = function() {
-            setTimeout(startPrank, 2000); // Start prank automatically after 2 seconds
-        };
-    </script>
 </head>
 <body>
-    <h1>Welcome to a normal website!</h1>
+    <div class="logo">Google</div>
+    <div class="search-box">
+        <input type="text" id="search" placeholder="Search Google or type a URL">
+        <button class="search-btn" onclick="prankSearch()">Google Search</button>
+    </div>
+    <script>
+        function prankSearch() {
+            const embarrassingQueries = [
+                "I crapped my pants",
+                "Kill yourself",
+                "Penis",
+                "I like your mom",
+                "Am I ugly?",
+                "Call of booty black cocks",
+                "Do people secretly hate me?"
+            ];
+            const randomQuery = embarrassingQueries[Math.floor(Math.random() * embarrassingQueries.length)];
+            window.location.href = `https://www.google.com/search?q=${encodeURIComponent(randomQuery)}`;
+        }
+    </script>
 </body>
 </html>
