@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prank Site</title>
+    <style>
+        body {
+            background-color: #008080;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding-top: 100px;
+        }
+        .fake-error {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 400px;
+            background: #c0c0c0;
+            border: 3px solid black;
+            padding: 15px;
+            box-shadow: 5px 5px 10px rgba(0,0,0,0.5);
+        }
+        .fake-title {
+            background: navy;
+            color: white;
+            padding: 5px;
+            font-weight: bold;
+            text-align: left;
+        }
+        .fake-content {
+            padding: 10px;
+        }
+        .fake-button {
+            background: lightgray;
+            border: 1px solid black;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+    </style>
+    <script>
+        function startPrank() {
+            // Create a loop for popups
+            let count = 0;
+            let maxPopups = 5; // Browsers block excessive popups, so we limit them
+            let interval = setInterval(() => {
+                if (count < maxPopups) {
+                    window.open('https://example.com', '_blank', 'width=400,height=300');
+                    count++;
+                } else {
+                    clearInterval(interval);
+                }
+            }, 500);
+            
+            // Display fake XP error
+            let errorBox = document.createElement("div");
+            errorBox.className = "fake-error";
+            errorBox.innerHTML = `
+                <div class='fake-title'>
+                    <span>Windows XP Error</span>
+                </div>
+                <div class='fake-content'>
+                    <p>A fatal error has occurred.</p>
+                    <button class='fake-button' onclick='startPrank()'>OK</button>
+                </div>
+            `;
+            document.body.appendChild(errorBox);
+        }
+
+        window.onload = function() {
+            setTimeout(startPrank, 2000); // Start prank automatically after 2 seconds
+        };
+    </script>
+</head>
+<body>
+    <h1>Welcome to a normal website!</h1>
+</body>
+</html>
