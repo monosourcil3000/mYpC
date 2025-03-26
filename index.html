@@ -3,61 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Google</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+    <title>Sliding Pop-Up Prank</title>
     <style>
         body {
-            font-family: 'Roboto', sans-serif;
             text-align: center;
-            margin-top: 15%;
+            margin-top: 20%;
         }
-        .logo {
-            font-size: 60px;
-            font-weight: bold;
-            color: #4285F4;
-        }
-        .search-box {
-            margin-top: 20px;
-        }
-        input {
-            width: 400px;
-            padding: 10px;
-            font-size: 16px;
-            border: 1px solid #dfe1e5;
-            border-radius: 24px;
-            outline: none;
-        }
-        .search-btn {
-            padding: 10px 20px;
-            font-size: 16px;
-            border: none;
-            background-color: #4285F4;
-            color: white;
-            border-radius: 5px;
-            cursor: pointer;
+        h1 {
+            font-size: 30px;
+            color: red;
         }
     </style>
 </head>
 <body>
-    <div class="logo">Google</div>
-    <div class="search-box">
-        <input type="text" id="search" placeholder="Search Google or type a URL">
-        <button class="search-btn" onclick="prankSearch()">Google Search</button>
-    </div>
+    <h1>Uh-oh! Something's gone wrong!</h1>
+    <p>Get ready for some fun! Don't worry, it's all a prank!</p>
+
     <script>
-        function prankSearch() {
-            const embarrassingQueries = [
-                "I crapped my pants",
-                "Kill yourself",
-                "Penis",
-                "I like your mom",
-                "Am I ugly?",
-                "Call of booty black cocks",
-                "Do people secretly hate me?"
-            ];
-            const randomQuery = embarrassingQueries[Math.floor(Math.random() * embarrassingQueries.length)];
-            window.location.href = `https://www.google.com/search?q=${encodeURIComponent(randomQuery)}`;
+        function openSlidingWindows() {
+            let newWindow = window.open('', '', 'width=200,height=100,left=' + Math.random() * screen.width + ',top=' + Math.random() * screen.height);
+            
+            newWindow.document.write('<h1>This is a prank window!</h1>');
+            newWindow.document.body.style.backgroundColor = 'red';
+
+            // Function to animate the window's position
+            function moveWindow() {
+                let newX = Math.random() * screen.width;
+                let newY = Math.random() * screen.height;
+                
+                let stepX = (newX - newWindow.screenX) / 50;
+                let stepY = (newY - newWindow.screenY) / 50;
+
+                let frameCount = 0;
+                let interval = setInterval(() => {
+                    frameCount++;
+                    newWindow.moveBy(stepX, stepY);
+
+                    // Stop the animation when it's close enough
+                    if (frameCount >= 50) {
+                        clearInterval(interval);
+                    }
+                }, 10);
+            }
+
+            // Open another window inside the new window and animate
+            newWindow.onload = function() {
+                openSlidingWindows();
+                moveWindow();
+            };
+            
+            // Start moving the window right away
+            moveWindow();
         }
+
+        // Start opening windows immediately
+        openSlidingWindows();
     </script>
 </body>
 </html>
