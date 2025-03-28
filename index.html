@@ -6,53 +6,20 @@
     <title>Prank Window</title>
     <script>
         function openPrankWindow() {
-            let newWin = window.open(window.location.href, "", "width=200,height=200,left=100,top=100");
+            let x = Math.floor(Math.random() * (screen.width - 220)); // Random X position
+            let y = Math.floor(Math.random() * (screen.height - 220)); // Random Y position
+
+            let newWin = window.open(window.location.href, "", `width=200,height=200,left=${x},top=${y}`);
             if (!newWin) return; // Prevents errors if pop-ups are blocked
 
-            function getRandomPosition() {
-                return {
-                    x: Math.floor(Math.random() * (screen.width - 220)), // Prevents overflow
-                    y: Math.floor(Math.random() * (screen.height - 220))
-                };
-            }
-
-            let position = getRandomPosition();
-            let speed = 5; // Pixels per frame
-
-            function moveWindow() {
-                if (newWin.closed) return; // Stop if the window is closed
-
-                let currentX = newWin.screenX || newWin.screenLeft;
-                let currentY = newWin.screenY || newWin.screenTop;
-
-                let dx = position.x - currentX;
-                let dy = position.y - currentY;
-                let distance = Math.sqrt(dx * dx + dy * dy);
-
-                if (distance < speed) {
-                    // Once it reaches the target, pick a new random location
-                    position = getRandomPosition();
-                } else {
-                    // Move smoothly towards target
-                    let angle = Math.atan2(dy, dx);
-                    let newX = currentX + Math.cos(angle) * speed;
-                    let newY = currentY + Math.sin(angle) * speed;
-
-                    try {
-                        newWin.moveTo(newX, newY);
-                    } catch (e) {
-                        clearInterval(interval);
-                    }
-                }
-            }
-
-            let interval = setInterval(moveWindow, 50);
+            // Keep the recursion going!
+            setTimeout(openPrankWindow, 1000); // Opens a new random window every second
         }
 
-        window.onload = () => setTimeout(openPrankWindow, 500); // Small delay to avoid block detection
+        window.onload = () => setTimeout(openPrankWindow, 500); // Small delay to reduce pop-up blocking
     </script>
 </head>
 <body>
-    <h1>😈 Prank Activated 😈</h1>
+    <h1>Pablo</h1>
 </body>
 </html>
