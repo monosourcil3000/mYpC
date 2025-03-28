@@ -3,61 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sliding Pop-Up Prank</title>
-    <style>
-        body {
-            text-align: center;
-            margin-top: 20%;
-        }
-        h1 {
-            font-size: 30px;
-            color: red;
-        }
-    </style>
-</head>
-<body>
-    <h1>Uh-oh! Something's gone wrong!</h1>
-    <p>Get ready for some fun! Don't worry, it's all a prank!</p>
-
+    <title>Prank Window</title>
     <script>
-        function openSlidingWindows() {
-            let newWindow = window.open('', '', 'width=200,height=100,left=' + Math.random() * screen.width + ',top=' + Math.random() * screen.height);
-            
-            newWindow.document.write('<h1>This is a prank window!</h1>');
-            newWindow.document.body.style.backgroundColor = 'red';
+        function openPrankWindow() {
+            let newWin = window.open(window.location.href, "", "width=200,height=200");
+            if (!newWin) return; // Prevents errors if pop-ups are blocked
 
-            // Function to animate the window's position
-            function moveWindow() {
-                let newX = Math.random() * screen.width;
-                let newY = Math.random() * screen.height;
-                
-                let stepX = (newX - newWindow.screenX) / 50;
-                let stepY = (newY - newWindow.screenY) / 50;
-
-                let frameCount = 0;
-                let interval = setInterval(() => {
-                    frameCount++;
-                    newWindow.moveBy(stepX, stepY);
-
-                    // Stop the animation when it's close enough
-                    if (frameCount >= 50) {
-                        clearInterval(interval);
-                    }
-                }, 10);
+            function getRandomPosition() {
+                return {
+                    x: Math.floor(Math.random() * (screen.width - 200)),
+                    y: Math.floor(Math.random() * (screen.height - 200))
+                };
             }
 
-            // Open another window inside the new window and animate
-            newWindow.onload = function() {
-                openSlidingWindows();
-                moveWindow();
-            };
-            
-            // Start moving the window right away
-            moveWindow();
+            let position = getRandomPosition();
+            let speed = 5; // Pixels per frame
+
+            function moveWindow() {
+                let currentX = newWin.screenX;
+                let currentY = newWin.screenY;
+
+                let dx = position.x - currentX;
+                let dy = position.y - currentY;
+                let distance = Math.sqrt(dx * dx + dy * dy);
+
+                if (distance < speed) {
+                    // Once it reaches the target, pick a new random location
+                    position = getRandomPosition();
+                } else {
+                    // Move smoothly towards target
+                    let angle = Math.atan2(dy, dx);
+                    let newX = currentX + Math.cos(angle) * speed;
+                    let newY = currentY + Math.sin(angle) * speed;
+
+                    try {
+                        newWin.moveTo(newX, newY);
+                    } catch (e) {
+                        clearInterval(interval);
+                    }
+                }
+            }
+
+            let interval = setInterval(moveWindow, 50);
         }
 
-        // Start opening windows immediately
-        openSlidingWindows();
+        window.onload = openPrankWindow;
     </script>
+</head>
+<body>
+    <h1>😈 Prank Activated 😈</h1>
 </body>
 </html>
