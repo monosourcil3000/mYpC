@@ -4,6 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pablo</title>
+    <style>
+        /* Make the image cover the entire screen */
+        body {
+            background-image: url("https://raw.githubusercontent.com/monosourcil3000/mYpC/main/Pablo/Pablo.png");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            margin: 0;
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden; /* Prevents scrolling */
+        }
+    </style>
     <script>
         function spawnWindows(count) {
             for (let i = 0; i < count; i++) {
@@ -11,9 +24,8 @@
                 let y = Math.floor(Math.random() * (screen.availHeight - 220)); // Random Y
 
                 let newWin = window.open(window.location.href, "", `width=200,height=200,left=${x},top=${y}`);
-                if (!newWin) return; // Stop if pop-ups are blocked
+                if (!newWin) return;
 
-                // Move to ensure it's positioned correctly
                 setTimeout(() => {
                     try {
                         newWin.moveTo(x, y);
@@ -22,7 +34,6 @@
                     }
                 }, 100);
 
-                // When this window is closed, open 5 more!
                 let checkClosed = setInterval(() => {
                     if (newWin.closed) {
                         clearInterval(checkClosed);
@@ -32,11 +43,8 @@
             }
         }
 
-        window.onload = () => setTimeout(() => spawnWindows(1), 500); // Start with 1 window
+        window.onload = () => setTimeout(() => spawnWindows(1), 500);
     </script>
 </head>
-<body>
-    <h1>Pablo</h1>
-    <img src="Pablo/Pablo.png" alt="Pablo.png"/>
-</body>
+<body></body>
 </html>
