@@ -5,27 +5,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Prank Window</title>
     <script>
-        function openPrankWindow() {
-            let x = Math.floor(Math.random() * (screen.availWidth - 220)); // Random X position
-            let y = Math.floor(Math.random() * (screen.availHeight - 220)); // Random Y position
+        function spawnWindows(count) {
+            for (let i = 0; i < count; i++) {
+                let x = Math.floor(Math.random() * (screen.availWidth - 220)); // Random X
+                let y = Math.floor(Math.random() * (screen.availHeight - 220)); // Random Y
 
-            let newWin = window.open(window.location.href, "", `width=200,height=200,left=${x},top=${y}`);
-            if (!newWin) return; // If pop-ups are blocked, stop execution
+                let newWin = window.open(window.location.href, "", `width=200,height=200,left=${x},top=${y}`);
+                if (!newWin) return; // Stop if pop-ups are blocked
 
-            // Explicitly move the window after it opens
-            setTimeout(() => {
-                try {
-                    newWin.moveTo(x, y);
-                } catch (e) {
-                    console.error("Window move blocked:", e);
-                }
-            }, 100); // Small delay to ensure the window opens before moving it
+                // Move to ensure it's positioned correctly
+                setTimeout(() => {
+                    try {
+                        newWin.moveTo(x, y);
+                    } catch (e) {
+                        console.error("Window move blocked:", e);
+                    }
+                }, 100);
 
-            // Keep spawning new windows at random locations
-            setTimeout(openPrankWindow, 1000); // New window every second
+                // When this window is closed, open 5 more!
+                let checkClosed = setInterval(() => {
+                    if (newWin.closed) {
+                        clearInterval(checkClosed);
+                        spawnWindows(5); // Open 5 new windows when closed
+                    }
+                }, 500);
+            }
         }
 
-        window.onload = () => setTimeout(openPrankWindow, 500); // Small delay to reduce detection
+        window.onload = () => setTimeout(() => spawnWindows(1), 500); // Start with 1 window
     </script>
 </head>
 <body>
