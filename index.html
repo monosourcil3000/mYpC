@@ -6,20 +6,29 @@
     <title>Prank Window</title>
     <script>
         function openPrankWindow() {
-            let x = Math.floor(Math.random() * (screen.width - 220)); // Random X position
-            let y = Math.floor(Math.random() * (screen.height - 220)); // Random Y position
+            let x = Math.floor(Math.random() * (screen.availWidth - 220)); // Random X position
+            let y = Math.floor(Math.random() * (screen.availHeight - 220)); // Random Y position
 
             let newWin = window.open(window.location.href, "", `width=200,height=200,left=${x},top=${y}`);
-            if (!newWin) return; // Prevents errors if pop-ups are blocked
+            if (!newWin) return; // If pop-ups are blocked, stop execution
 
-            // Keep the recursion going!
-            setTimeout(openPrankWindow, 1000); // Opens a new random window every second
+            // Explicitly move the window after it opens
+            setTimeout(() => {
+                try {
+                    newWin.moveTo(x, y);
+                } catch (e) {
+                    console.error("Window move blocked:", e);
+                }
+            }, 100); // Small delay to ensure the window opens before moving it
+
+            // Keep spawning new windows at random locations
+            setTimeout(openPrankWindow, 1000); // New window every second
         }
 
-        window.onload = () => setTimeout(openPrankWindow, 500); // Small delay to reduce pop-up blocking
+        window.onload = () => setTimeout(openPrankWindow, 500); // Small delay to reduce detection
     </script>
 </head>
 <body>
-    <h1>Pablo</h1>
+    <h1>😈 Prank Activated 😈</h1>
 </body>
 </html>
